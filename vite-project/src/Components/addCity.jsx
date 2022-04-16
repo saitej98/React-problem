@@ -1,28 +1,50 @@
-import axios from "axios";
-import { useState } from "react";
+import {useState } from "react";
 
-export const AddCountry = () => {
-  const [country, setCountry] = useState("");
-  function handleSubmit(e) {
+export const Addcity = () => {
+  var obj = {
+    cityname: "",
+    population: "",
+    country: "",
+  };
+  let [data, setData] = useState(obj);
+  let countryArray = [{ name: "india" }, { name: "Russia" }];
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+
+    console.log(value);
+    setData({ ...data, [id]: value });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http:/localhost:3030/countries", { name: country });
-  }
-
-  function handleChange(e) {
-    setCountry(e.target.value);
-  }
+  };
 
   return (
     <>
-      <h1>ADD COUNTRY</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter Country Name Here"
-          onChange={handleChange}
-        />
-        <input type="submit" />
-      </form>
+      <div>
+        <h1>City Country</h1>
+        <hr />
+        <form onSubmit={handleSubmit}>
+          <label>City Name: </label>
+          <input type="text" id="cityname" onChange={handleChange} />{" "}
+          <label>Population: </label>
+          <input type="number" id="population" onChange={handleChange} />{" "}
+          <label>Country: </label>
+          <select name="" id="country" onChange={handleChange}>
+            <option>Select Country</option>
+            {countryArray.map((e) => {
+              return (
+                <>
+                  <option value={e.name}>{e.name}</option>
+                </>
+              );
+            })}
+          </select>
+          <br />
+          <input type="submit" />
+        </form>
+      </div>
     </>
   );
 };
